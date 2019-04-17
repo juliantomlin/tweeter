@@ -24,8 +24,24 @@
     <!-- App JS -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
-    <script type="text/javascript" src="/scripts/toggle-focus.js"></script>
-  </head>
+    <script>
+      $(document).ready(function() {
+        $('form').on('submit', function(event){
+          event.preventDefault()
+          let data = $(this).serialize()
+          $.ajax({
+            url: '/tweets',
+            method: 'POST',
+            data: data
+          }).then(
+          (res) => {console.log('Success', data)},
+          (err) => {console.log('Error')}
+          )
+        })
+      })
+    </script>
+<!--     <script type="text/javascript" src="/scripts/toggle-focus.js"></script>
+ -->  </head>
 
   <body>
 
@@ -55,7 +71,7 @@
             </div>
             <h5> @UserName </h5>
           </header>
-          <div>
+          <div class='content'>
             <p> This is a tweet!</p>
           </div>
           <footer>

@@ -3,7 +3,7 @@
   opacity: .75;
 }
 
-.overlay.focus {
+.overlay:hover {
   background-color: white;
   opacity: 1;
 }
@@ -13,6 +13,7 @@
   margin: 1em;
   border-radius: 5px;
   overflow: hidden;
+  background-color: white;
 }
 
 #tweets header {
@@ -40,11 +41,7 @@ float: right;
   margin-top: 10px;
 }
 
-#tweets div {
-  background-color: : white;
-}
-
-#tweets div p {
+#tweets div.content p {
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -68,8 +65,7 @@ float: right;
   opacity: 0;
 }
 
-#tweets footer .icons.focus {
-  margin-right: 5px;
+#tweets .overlay:hover footer .icons {
   opacity: 1;
 }
 
