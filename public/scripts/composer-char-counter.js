@@ -10,8 +10,6 @@ $(document).ready(function() {
       counterObject.css({color: 'red'})
     } else {
       counterObject.css({color: 'black'})
-
     }
-
   })
 })
