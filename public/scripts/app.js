@@ -28,6 +28,13 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+ function makeSafe(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+
  const loadTweets = function () {
   $.getJSON('/tweets', function( data ) {
     renderTweets(data)
@@ -43,6 +50,7 @@ const renderTweets = function (tweets) {
 
 
 const createTweetElement = function (data) {
+  const safe = `<p>${makeSafe(data.content.text)}</p>`
   let $tweet = $('<article>').addClass('tweet')
 
     let overlay = $('<div>').addClass('overlay').appendTo($tweet)
@@ -54,7 +62,7 @@ const createTweetElement = function (data) {
         let handle = $('<h5>').append(data.user.handle).appendTo(header)
 
       let body = $('<div>').addClass('content').appendTo(overlay)
-        let text = $('<p>').append(data.content.text).appendTo(body)
+        let text = $('<p>').append(safe).appendTo(body)
 
       let footer = $('<footer>').appendTo(overlay)
         let time = $('<h6>').append(Date(data.created_at).slice(0,21)).appendTo(footer)
