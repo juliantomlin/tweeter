@@ -29,14 +29,26 @@
         $('form').on('submit', function(event){
           event.preventDefault()
           let data = $(this).serialize()
-          $.ajax({
-            url: '/tweets',
-            method: 'POST',
-            data: data
-          }).then(
-          (res) => {console.log('Success', data)},
-          (err) => {console.log('Error')}
-          )
+          if (data.length < 146){
+            $.ajax({
+              url: '/tweets',
+              method: 'POST',
+              data: data
+            }).then(
+            (res) => {
+              console.log('Success', data, data.length)
+              loadTweets()
+              $("form")[0].reset()
+            },
+
+            (err) => {
+              console.log('Error')
+              alert('tweet empty')
+              })
+            }
+          else {
+            alert('tweet too long')
+          }
         })
       })
     </script>
