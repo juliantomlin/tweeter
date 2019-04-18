@@ -1,3 +1,10 @@
+.new-tweet.shrink {
+  height: 0px;
+  padding: 0px;
+  border: 0px;
+
+}
+
 .new-tweet {
   background-color: #F0F0F0;
   margin-left: 2em;
@@ -6,6 +13,8 @@
   padding: 0px 10px 5px;
   border: 1px solid black;
   border-radius: 5px;
+  height: 150px;
+  overflow: hidden;
 /*  display: flex;
 */}
 
@@ -21,4 +30,31 @@
 span.counter {
   float: right;
   padding-right: 10px;
+}
+
+.new-tweet footer {
+  display: flex;
+  max-height: 22px;
+  justify-content: space-between;
+}
+.new-tweet div {
+  display: flex;
+  color: red;
+}
+
+.err-empty {
+  position: absolute;
+  opacity: 0;
+}
+
+.err-long {
+  opacity: 0;
+}
+
+.err-empty.true {
+  opacity: 1;
+}
+
+.err-long.true{
+  opacity: 1;
 }
