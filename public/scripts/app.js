@@ -28,51 +28,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
- function makeSafe(str) {
-  var div = document.createElement('div');
-  div.appendChild(document.createTextNode(str));
-  return div.innerHTML;
-}
-
-
- const loadTweets = function () {
-  $.getJSON('/tweets', function( data ) {
-    renderTweets(data)
-  })
- }
-
-const renderTweets = function (tweets) {
-  for (tweet in tweets) {
-    $('#tweets').prepend(createTweetElement(tweets[tweet]))
-    // console.log(createTweetElement(tweets[tweet]))
-  }
-}
-
-
-const createTweetElement = function (data) {
-  const safe = `<p>${makeSafe(data.content.text)}</p>`
-  let $tweet = $('<article>').addClass('tweet')
-
-    let overlay = $('<div>').addClass('overlay').appendTo($tweet)
-
-      let header = $('<header>').appendTo(overlay)
-        let avatarAndName = $('<div>').appendTo(header)
-          let avatar = $('<img>').addClass('avatar').attr('src', data.user.avatars.small).appendTo(avatarAndName)
-          let name = $('<h3>').append(data.user.name).appendTo(avatarAndName)
-        let handle = $('<h5>').append(data.user.handle).appendTo(header)
-
-      let body = $('<div>').addClass('content').appendTo(overlay)
-        let text = $('<p>').append(safe).appendTo(body)
-
-      let footer = $('<footer>').appendTo(overlay)
-        let time = $('<h6>').append(Date(data.created_at).slice(0,21)).appendTo(footer)
-        let icons = $('<div>').addClass('icons').appendTo(footer)
-          let flag = $('<i>').addClass('fas fa-flag').appendTo(icons)
-          let retweet = $('<i>').addClass('fas fa-retweet').appendTo(icons)
-          let heart = $('<i>').addClass('fas fa-heart').appendTo(icons)
-
-  return $tweet
-}
 
 // const data = [
 //   {
@@ -141,8 +96,88 @@ const createTweetElement = function (data) {
 // var $tweet = createTweetElement(tweetData);
 
 $(document).ready(function() {
-  loadTweets()
-})
+
+
+  loadTweets();
+
+  function makeSafe(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+
+  function loadTweets(){
+    $.getJSON('/tweets', function( data ) {
+      //console.log("test ")
+      //console.log(data);
+      renderTweets(data)
+    })
+  }
+
+  function renderTweets (tweets) {
+    for (tweet in tweets) {
+      $('#tweets').prepend(createTweetElement(tweets[tweet]))
+    // console.log(createTweetElement(tweets[tweet]))
+    }
+  }
+
+
+  function createTweetElement(data) {
+    const safe = `<p>${makeSafe(data.content.text)}</p>`
+    let $tweet = $('<article>').addClass('tweet')
+
+    let overlay = $('<div>').addClass('overlay').appendTo($tweet)
+    let header = $('<header>').appendTo(overlay)
+    let avatarAndName = $('<div>').appendTo(header)
+    let avatar = $('<img>').addClass('avatar').attr('src', data.user.avatars.small).appendTo(avatarAndName)
+    let name = $('<h3>').append(data.user.name).appendTo(avatarAndName)
+    let handle = $('<h5>').append(data.user.handle).appendTo(header)
+
+    let body = $('<div>').addClass('content').appendTo(overlay)
+    let text = $('<p>').append(safe).appendTo(body)
+
+    let footer = $('<footer>').appendTo(overlay)
+    let time = $('<h6>').append(Date(data.created_at).slice(0,21)).appendTo(footer)
+    let icons = $('<div>').addClass('icons').appendTo(footer)
+    let flag = $('<i>').addClass('fas fa-flag').appendTo(icons)
+    let retweet = $('<i>').addClass('fas fa-retweet').appendTo(icons)
+    let heart = $('<i>').addClass('fas fa-heart').appendTo(icons)
+
+    return $tweet
+  }
+
+  $('#tweetform').on('submit', function(event){
+          $('.err-empty').removeClass('true')
+          $('.err-long').removeClass('true')
+          event.preventDefault()
+          let data = $(this).serialize()
+          if (data.length < 146){
+            $.ajax({
+              url: '/tweets',
+              method: 'POST',
+              data: data
+            }).then(
+            (res) => {
+              console.log('Success', data, data.length)
+              loadTweets();
+              $("form")[0].reset()
+            },
+
+            (err) => {
+              console.log('Error')
+              $('.err-empty').addClass('true')
+
+              })
+            }
+          else {
+            $('.err-long').addClass('true')
+          }
+    })
+
+
+
+});
 
 // Test / driver code (temporary)
 // console.log($tweet); // to see what it looks like
