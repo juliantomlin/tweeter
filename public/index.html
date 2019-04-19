@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
     <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/login.css" type="text/css" />
 
 
     <!-- External JS -->
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
     <script type="text/javascript" src="/scripts/toggle-focus.js"></script>
+    <script type="text/javascript" src="/scripts/login-button.js"></script>
   </head>
 
 
@@ -33,11 +35,26 @@
         <img class="logo" src="/images/bird.png">
         <span class="header">Tweeter</span>
       </div>
-      <button class='comp'>Compose</button>
+      <div class='rightside'>
+        <div class='loggedin'>
+          <button class='login'>Login</button>
+          <p class='hidden'>User Name</p>
+          <button class='logout'>Logout</button>
+        </div>
+        <button class='comp'>Compose</button>
+      </div>
     </nav>
 
     <!-- Page-specific (main) content here -->
     <main class="container">
+      <section class='loginArea'>
+        <form method='POST' action='/login'>
+          <lable for='UserName'>User Name</lable>
+          <input class='UserName' type='text' name='UserName'>
+          <lable for='password'>Password</form>
+          <input class='passowrd' type='text' name='password'>
+          <button type='submit' class='oklogin'>OK</button>
+      </section>
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
         <form method="POST" action="/tweets" id="tweetform">

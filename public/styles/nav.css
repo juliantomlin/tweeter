@@ -10,6 +10,7 @@ nav {
   z-index: 100;
   display: flex;
   justify-content: space-between;
+
 }
 
 #nav-bar .logo {
@@ -24,9 +25,46 @@ nav {
   line-height: 80px;
   color: #e8fdff;
 }
+.rightside{
+  display: flex;
+}
 
 .comp {
   height: 50px;
   width: 80px;
   align-self: center;
+  margin-left: 1em;
+}
+
+.loggedin {
+  height: 50px;
+  display: flex;
+  align-self: center;
+  justify-content: flex-end;
+}
+
+.loggedin p {
+  color: white;
+  opacity: 0
+}
+
+.loggedin p.shown{
+  opacity: 1
+}
+
+.logout {
+  height: 40px;
+  width: 60px;
+  margin-left: 1em;
+  align-self: center;
+  z-index: 10;
+  opacity: 1;
+  display: none;
+}
+
+.login {
+  height: 40px;
+  width: 60px;
+  align-self: center;
+  position: absolute;
 }

@@ -1,0 +1,27 @@
+.loginArea {
+  height: 250px;
+  width: 450px;
+  background-color: #00a087;
+  position: absolute;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 2em;
+  border-bottom: 2px solid #026354;
+  border-left: 2px solid #026354;
+  border-right: 2px solid #026354;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: none;
+}
+
+.loginArea input {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.oklogin {
+  float: right;
+  height: 50px;
+  width: 80px;
+}
