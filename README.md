@@ -22,4 +22,5 @@ This repository uses CSS, HTML and javascript to dynamically create and display 
 
 ## Screenshots
 
-
+!["Top of the page"](https://github.com/juliantomlin/tweeter/blob/master/docs/mainpage.png)
+![Compose tweet box exposed](https://github.com/juliantomlin/tweeter/blob/master/docs/tweetcomposer.png)
