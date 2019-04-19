@@ -24,3 +24,9 @@ nav {
   line-height: 80px;
   color: #e8fdff;
 }
+
+.comp {
+  height: 50px;
+  width: 80px;
+  align-self: center;
+}
