@@ -22,9 +22,22 @@ $(document).ready(function() {
     }
   }
 
+  function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var time = date + ' ' + month + ' ' + year ;
+    return time;
+  }
+
   function howLongAgo (past) {
     let hour = Math.floor(((+ new Date()) - past)/3.6e+6)
-    if (hour === 1) {
+    if (hour > 24) {
+      return timeConverter(past)
+    }
+    else if (hour === 1) {
       return `made ${hour} hour ago`
     }
     else if (hour > 1) {

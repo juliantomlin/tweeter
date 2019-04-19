@@ -9,11 +9,11 @@ module.exports = function makeDataHelpers(db) {
 
     // Saves a tweet to `db`
     saveTweet: function(newTweet, callback) {
-      db.collection("tweets").insertOne(newTweet, function (err, tweets) {
+      db.collection("tweets").insertOne(newTweet, function (err, tweet) {
         if (err) {
-          callback(err, false)
+          callback(err)
         } else {
-          callback(null, newTweet);
+          callback(null);
         }
       })
     },
