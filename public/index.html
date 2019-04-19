@@ -6,9 +6,7 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!-- App CSS -->
@@ -27,8 +25,8 @@
     <script type="text/javascript" src="/scripts/toggle-focus.js"></script>
   </head>
 
-  <body>
 
+  <body>
     <!-- Top nav bar (fixed) -->
     <nav id="nav-bar">
       <div>
@@ -46,16 +44,19 @@
           <textarea name="text" placeholder="What are you humming about?"></textarea>
           <footer>
           <input type="submit" value="Tweet">
+    <!--error codes, they start hidden -->
           <div>
             <span class='err-long'>Tweet is too long!</span>
             <span class='err-empty'>Tweet is empty!</span>
           </div>
+
           <span class="counter">140</span>
         </footer>
         </form>
       </section>
-      <section id='tweets'>
 
+      <section id='tweets'>
+    <!-- this is where created tweets go -->
       </section>
     </main>
   </body>

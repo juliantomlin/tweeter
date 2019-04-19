@@ -3,26 +3,26 @@ $(document).ready(function() {
 
   loadTweets();
 
-  function makeSafe(str) {
+  function makeSafe(str) {                                     //disables the use of XSS in tweet bodies
     var div = document.createElement('div');
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
   }
 
 
-  function loadTweets(){
+  function loadTweets(){                                      //loads all the tweets from the db
     $.getJSON('/tweets', function( data ) {
       renderTweets(data)
     })
   }
 
-  function renderTweets (tweets) {
+  function renderTweets (tweets) {                             //loops through all the tweet objects and renders one at a time
     for (tweet in tweets) {
       $('#tweets').prepend(createTweetElement(tweets[tweet]))
     }
   }
 
-  function timeConverter(UNIX_timestamp){
+  function timeConverter(UNIX_timestamp){                      //convert timestamp into date string
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var year = a.getFullYear();
@@ -32,7 +32,7 @@ $(document).ready(function() {
     return time;
   }
 
-  function howLongAgo (past) {
+  function howLongAgo (past) {                                //returns a time based on how long ago the tweet was made from the current time
     let hour = Math.floor(((+ new Date()) - past)/3.6e+6)
     if (hour > 24) {
       return timeConverter(past)
@@ -57,7 +57,7 @@ $(document).ready(function() {
     }
   }
 
-  function createTweetElement(data) {
+  function createTweetElement(data) {                                       //renders the tweet article
     const safe = `<p>${makeSafe(data.content.text)}</p>`
     let $tweet = $('<article>').addClass('tweet')
 
@@ -81,7 +81,7 @@ $(document).ready(function() {
     return $tweet
   }
 
-  $('#tweetform').on('submit', function(event){
+  $('#tweetform').on('submit', function(event){                   //handle the form post event
     $('.err-empty').removeClass('true')
     $('.err-long').removeClass('true')
     event.preventDefault()
