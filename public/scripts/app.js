@@ -1,100 +1,3 @@
-// <article class='tweet'>
-// <div class='overlay'>
-//   <header>
-//     <div>
-//       <img class='avatar' src="/images/avatar.png">
-//       <h3> USER NAME and Avatar </h3>
-//     </div>
-//     <h5> @UserName </h5>
-//   </header>
-//   <div class='content'>
-//     <p> This is a tweet!</p>
-//   </div>
-//   <footer>
-//     <h6> 10 days ago</h6>
-//     <div class='icons'>
-//       <i class="fas fa-flag"></i>
-//       <i class="fas fa-retweet"></i>
-//       <i class="fas fa-heart"></i>
-//     </div>
-//   </footer>
-// </div>
-// </article>
-
-
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-
-
-// const data = [
-//   {
-//     "user": {
-//       "name": "Newton",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-//         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-//         "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-//       },
-//       "handle": "@SirIsaac"
-//     },
-//     "content": {
-//       "text": "If I have seen further it is by standing on the shoulders of giants"
-//     },
-//     "created_at": 1461116232227
-//   },
-//   {
-//     "user": {
-//       "name": "Descartes",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-//         "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-//         "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-//       },
-//       "handle": "@rd" },
-//     "content": {
-//       "text": "Je pense , donc je suis"
-//     },
-//     "created_at": 1461113959088
-//   },
-//   {
-//     "user": {
-//       "name": "Johann von Goethe",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-//         "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-//         "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-//       },
-//       "handle": "@johann49"
-//     },
-//     "content": {
-//       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-//     },
-//     "created_at": 1461113796368
-//   }
-// ];
-
-// Test / driver code (temporary). Eventually will get this from the server.
-// const tweetData = {
-//   "user": {
-//     "name": "Newton",
-//     "avatars": {
-//       "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-//       "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-//       "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-//     },
-//     "handle": "@SirIsaac"
-//   },
-//   "content": {
-//     "text": "If I have seen further it is by standing on the shoulders of giants"
-//   },
-//   "created_at": 1461116232227
-// }
-
-// var $tweet = createTweetElement(tweetData);
-
 $(document).ready(function() {
 
 
@@ -109,8 +12,6 @@ $(document).ready(function() {
 
   function loadTweets(){
     $.getJSON('/tweets', function( data ) {
-      //console.log("test ")
-      //console.log(data);
       renderTweets(data)
     })
   }
@@ -118,10 +19,30 @@ $(document).ready(function() {
   function renderTweets (tweets) {
     for (tweet in tweets) {
       $('#tweets').prepend(createTweetElement(tweets[tweet]))
-    // console.log(createTweetElement(tweets[tweet]))
     }
   }
 
+  function howLongAgo (past) {
+    let hour = Math.floor(((+ new Date()) - past)/3.6e+6)
+    if (hour === 1) {
+      return `made ${hour} hour ago`
+    }
+    else if (hour > 1) {
+      return `made ${hour} hours ago`
+    }
+    else {
+      let minute = Math.floor(((+ new Date()) - past)/60000)
+      if (minute === 1) {
+        return `made ${minute} minute ago`
+      }
+      else if (minute > 1) {
+        return `made ${minute} minutes ago`
+      }
+      else {
+        return `made a few seconds ago`
+      }
+    }
+  }
 
   function createTweetElement(data) {
     const safe = `<p>${makeSafe(data.content.text)}</p>`
@@ -138,7 +59,7 @@ $(document).ready(function() {
     let text = $('<p>').append(safe).appendTo(body)
 
     let footer = $('<footer>').appendTo(overlay)
-    let time = $('<h6>').append(Date(data.created_at).slice(0,21)).appendTo(footer)
+    let time = $('<h6>').append(howLongAgo(data.created_at)).appendTo(footer)
     let icons = $('<div>').addClass('icons').appendTo(footer)
     let flag = $('<i>').addClass('fas fa-flag').appendTo(icons)
     let retweet = $('<i>').addClass('fas fa-retweet').appendTo(icons)
@@ -148,37 +69,31 @@ $(document).ready(function() {
   }
 
   $('#tweetform').on('submit', function(event){
-          $('.err-empty').removeClass('true')
-          $('.err-long').removeClass('true')
-          event.preventDefault()
-          let data = $(this).serialize()
-          if (data.length < 146){
-            $.ajax({
-              url: '/tweets',
-              method: 'POST',
-              data: data
-            }).then(
-            (res) => {
-              console.log('Success', data, data.length)
-              loadTweets();
-              $("form")[0].reset()
-            },
+    $('.err-empty').removeClass('true')
+    $('.err-long').removeClass('true')
+    event.preventDefault()
+    let data = $(this).serialize()
+    if (data.length < 146){
+      $.ajax({
+        url: '/tweets',
+        method: 'POST',
+        data: data
+      }).then(
+      (res) => {
+        console.log('Success', data, data.length)
+        loadTweets();
+        $("form")[0].reset()
+        $(".counter").text(140)
+      },
 
-            (err) => {
-              console.log('Error')
-              $('.err-empty').addClass('true')
+      (err) => {
+        console.log('Error')
+        $('.err-empty').addClass('true')
+        })
+      }
 
-              })
-            }
-          else {
-            $('.err-long').addClass('true')
-          }
-    })
-
-
-
+    else {
+      $('.err-long').addClass('true')
+    }
+  })
 });
-
-// Test / driver code (temporary)
-// console.log($tweet); // to see what it looks like
-// $('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right elements, classes, etc.

@@ -44,6 +44,7 @@ float: right;
 #tweets div.content p {
   margin-left: 5px;
   margin-right: 5px;
+  word-wrap: break-word;
 }
 
 #tweets footer{

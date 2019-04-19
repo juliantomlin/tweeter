@@ -35,9 +35,9 @@ module.exports = function(DataHelpers) {
 
     DataHelpers.saveTweet(tweet, (err) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json();
       } else {
-        res.status(201).send({result: true});
+        res.status(201).send();
       }
     });
   });
