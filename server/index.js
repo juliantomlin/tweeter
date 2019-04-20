@@ -9,7 +9,12 @@ const makeDb        = require('./mongo_example')
 const app           = express();
 const MongoClient = require("mongodb").MongoClient;
 const MONGODB_URI = "mongodb://localhost:27017/tweeter";
+const cookieSession = require('cookie-session')
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1'],
+}))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -24,6 +29,11 @@ makeDb((db)=>{                  //this makes the code wait for the db to be load
 
   app.use("/tweets", tweetsRoutes);
   app.use("/", loginRoutes);
+  app.post("/logout", (req, res) => {
+    console.log('cookiesgone?')
+    req.session = null
+    res.status(201).send()
+  })
 
 
   app.listen(PORT, () => {

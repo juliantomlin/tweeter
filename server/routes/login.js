@@ -1,6 +1,7 @@
 const express = require('express')
 const loginRoutes = express.Router()
 
+
 module.exports = function(loginHelpers) {
 console.log('ahahh')
 loginRoutes.post('/register', (req, res) => {
@@ -15,6 +16,7 @@ loginRoutes.post('/register', (req, res) => {
       password: req.body.password,
       userID: userID
     }
+    req.session.user_id = userID
     loginHelpers.saveUser(user, (err) => {
       if (err) {
         res.status(500).json();
@@ -38,7 +40,10 @@ loginRoutes.post('/login', (req, res) => {
         for (user in users) {
           console.log(users[user].user, req.body.UserName, users[user].password, req.body.password)
           if ((users[user].user === req.body.UserName) && (users[user].password === req.body.password)){
-            console.log('logged in')
+            req.session.user_id = users[user].userID
+            console.log(users)
+            console.log(req.session.user_id)
+            res.status(201).send()
           }
         }
       }

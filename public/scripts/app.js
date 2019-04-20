@@ -81,6 +81,33 @@ $(document).ready(function() {
     return $tweet
   }
 
+   $('#loginform .oklogin').on('click', function(event){                   //handle the login event
+    event.preventDefault()
+    let data = $('form').serialize()
+    $.ajax({
+      url: '/login',
+      method: 'POST',
+      data: data
+    }).then($('.loginArea').slideToggle('fast'),
+    $('button.logout').slideToggle("fast", function() {
+    }),
+    $('.loggedin p').toggleClass('shown'))
+  })
+
+    $('#loginform .register').on('click', function(event){                   //handle the register event
+    event.preventDefault()
+    let data = $('form').serialize()
+    $.ajax({
+      url: '/register',
+      method: 'POST',
+      data: data
+    }).then($('.loginArea').slideToggle('fast'),
+    $('button.logout').slideToggle("fast", function() {
+    }),
+    $('.loggedin p').toggleClass('shown'))
+  })
+
+
   $('#tweetform').on('submit', function(event){                   //handle the form post event
     $('.err-empty').removeClass('true')
     $('.err-long').removeClass('true')
@@ -93,9 +120,8 @@ $(document).ready(function() {
         data: data
       }).then(
       (res) => {
-        console.log('Success', data, data.length)
         loadTweets();
-        $("form")[0].reset()
+        $("form")[1].reset()
         $(".counter").text(140)
       },
 
