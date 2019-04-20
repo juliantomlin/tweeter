@@ -1,4 +1,5 @@
 .loginArea {
+  color: white;
   height: 250px;
   width: 450px;
   background-color: #00a087;
@@ -17,11 +18,13 @@
 
 .loginArea input {
   width: 100%;
-  margin-bottom: 2em;
+  height: 30px;
+  margin-bottom: 1.5em;
 }
 
-.oklogin {
+.loginArea button {
   float: right;
   height: 50px;
   width: 80px;
+  margin-left: 1em;
 }

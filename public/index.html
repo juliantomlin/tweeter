@@ -48,12 +48,13 @@
     <!-- Page-specific (main) content here -->
     <main class="container">
       <section class='loginArea'>
-        <form method='POST' action='/login'>
+        <form method='POST'>
           <lable for='UserName'>User Name</lable>
           <input class='UserName' type='text' name='UserName'>
           <lable for='password'>Password</form>
           <input class='passowrd' type='text' name='password'>
-          <button type='submit' class='oklogin'>OK</button>
+          <button type='submit' formaction='/login' class='oklogin'>Login</button>
+          <button type='submit' formaction='/register' class='register'>Register</button>
       </section>
       <section class="new-tweet">
         <h2>Compose Tweet</h2>

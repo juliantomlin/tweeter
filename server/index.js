@@ -17,11 +17,13 @@ app.use(express.static("public"));
 makeDb((db)=>{                  //this makes the code wait for the db to be loaded
 
   const DataHelpers = require("./lib/data-helpers.js")(db);  //uses the db to read tweets, also used to add tweets to db
-
+  const LoginHelpers = require('./lib/login-helpers.js')(db)
 
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);  //based on user actionds tells Datahelpers what action to take
+  const loginRoutes = require("./routes/login")(LoginHelpers);
 
   app.use("/tweets", tweetsRoutes);
+  app.use("/", loginRoutes);
 
 
   app.listen(PORT, () => {

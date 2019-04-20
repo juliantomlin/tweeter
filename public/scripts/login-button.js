@@ -6,3 +6,4 @@ $(document).ready(function() {
     $('.loginArea').slideToggle('fast')
   })
 })
+
