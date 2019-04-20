@@ -12,4 +12,5 @@ $(document).ready(function() {
     $('.loggedin p').toggleClass('shown')
     })
   })
+
 })

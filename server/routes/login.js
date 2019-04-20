@@ -3,9 +3,7 @@ const loginRoutes = express.Router()
 
 
 module.exports = function(loginHelpers) {
-console.log('ahahh')
-loginRoutes.post('/register', (req, res) => {
-  console.log('hi')
+  loginRoutes.post('/register', (req, res) => {
     if (!req.body.UserName || !req.body.password){
       res.sendStatus(400)
       return
@@ -38,13 +36,13 @@ loginRoutes.post('/login', (req, res) => {
         res.status(500).json({ error: err.message });
       } else {
         for (user in users) {
-          console.log(users[user].user, req.body.UserName, users[user].password, req.body.password)
           if ((users[user].user === req.body.UserName) && (users[user].password === req.body.password)){
             req.session.user_id = users[user].userID
-            console.log(users)
-            console.log(req.session.user_id)
             res.status(201).send()
           }
+        }
+        if (!req.session.user_id){
+          res.status(401).send()
         }
       }
     })
